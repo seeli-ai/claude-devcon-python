@@ -1,15 +1,13 @@
 {
-  "name": "Claude Code Python DevContainer",
+  "name": "Claude Code Python Development",
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
       "TZ": "${localEnv:TZ:America/Los_Angeles}"
     }
   },
-  "runArgs": [
-    "--cap-add=NET_ADMIN",
-    "--cap-add=NET_RAW"
-  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "runArgs": ["--cap-add=NET_ADMIN", "--cap-add=NET_RAW"],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -40,9 +38,7 @@
         },
         "python.defaultInterpreterPath": "/usr/bin/python3",
         "python.linting.enabled": true,
-        "python.linting.pylintEnabled": true,
-        "python.formatting.provider": "black",
-        "python.formatting.blackPath": "/usr/local/bin/black"
+        "python.linting.pylintEnabled": true
       }
     }
   },
@@ -57,5 +53,5 @@
     "POWERLEVEL9K_DISABLE_GITSTATUS": "true",
     "PYTHONPATH": "${containerWorkspaceFolder}"
   },
-  "postCreateCommand": "pip3 install --user -r requirements.txt"
+  "postCreateCommand": "pip3 install --break-system-packages --user -r requirements.txt"
 }

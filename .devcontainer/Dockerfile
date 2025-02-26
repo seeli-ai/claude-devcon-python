@@ -22,27 +22,11 @@ RUN apt update && apt install -y less \
   jq \
   python3 \
   python3-pip \
-  python3-venv \
-  python3-dev \
-  ipython3
+  python3-dev
 
 # Create symlinks for Python
 RUN ln -sf /usr/bin/python3 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip
-
-# Install Python packages
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir \
-    pytest \
-    black \
-    pylint \
-    flake8 \
-    mypy \
-    pytest-cov \
-    ipykernel \
-    jupyter \
-    numpy \
-    pandas
 
 # Ensure default node user has access to /usr/local/share
 RUN mkdir -p /usr/local/share/npm-global && \
@@ -59,12 +43,11 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
 # Set `DEVCONTAINER` environment variable to help with orientation
 ENV DEVCONTAINER=true
 
-# Create workspace and config directories and set permissions
-RUN mkdir -p /workspace /home/node/.claude && \
-  chown -R node:node /workspace /home/node/.claude
+# Create config directories and set permissions
+RUN mkdir -p /home/node/.claude && \
+  chown -R node:node /home/node/.claude
 
-WORKDIR /workspaces/${localWorkspaceFolderBasename}
-
+# Install git-delta
 RUN wget https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb && \
   dpkg -i git-delta_0.18.2_amd64.deb && \
   rm git-delta_0.18.2_amd64.deb
@@ -77,7 +60,8 @@ ENV NPM_CONFIG_PREFIX=/usr/local/share/npm-global
 ENV PATH=$PATH:/usr/local/share/npm-global/bin
 
 # Set the default shell to bash rather than sh
-ENV SHELL /bin/zsh
+ENV SHELL=/bin/zsh
+ENV PATH="/home/node/.local/bin:$PATH"
 
 # Default powerline10k theme
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.2.0/zsh-in-docker.sh)" -- \
@@ -90,4 +74,5 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 # Install Claude
 RUN npm install -g @anthropic-ai/claude-code
+
 
