@@ -40,4 +40,3 @@ jobs:
             git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
             git push
           fi
-Update main.yml · seeli-ai/BackendFastAPI@921d2e1
