@@ -1,4 +1,4 @@
-# claude-devcon-python1
+# claude-devcon-python
 [
     ![Open in Remote - Containers](
         https://xebia.com/wp-content/uploads/2023/11/v1.svg    )
