@@ -1,0 +1,28 @@
+name: Update Repository URL in README
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Update README repository URL
+        run: |
+          # Get the repository URL
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
+          
+          # Replace the placeholder with the actual repository URL
+          sed -i "s|{{REPOSITORY_URL}}|${REPO_URL}|g" README.md
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git diff --staged --quiet || git commit -m "Update repository URL in README"
+          git push
