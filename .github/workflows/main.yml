@@ -1,24 +1,3 @@
-Skip to content
-Navigation Menu
-seeli-ai
-BackendFastAPI
-
-Type / to search
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Update Repository URL in README
-Update main.yml #2
-Jobs
-Run details
-Workflow file for this run
-.github/workflows/main.yml at 921d2e1
 name: Update Repository URL in README
 
 on:
