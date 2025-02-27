@@ -1,3 +1,24 @@
+Skip to content
+Navigation Menu
+seeli-ai
+BackendFastAPI
+
+Type / to search
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Update Repository URL in README
+Update main.yml #2
+Jobs
+Run details
+Workflow file for this run
+.github/workflows/main.yml at 921d2e1
 name: Update Repository URL in README
 
 on:
@@ -16,10 +37,14 @@ jobs:
       - name: Update README repository URL
         run: |
           # Get the repository URL
-          REPO_URL="https://github.com/${GITHUB_REPOSITORY}.git"
-          
-          # Replace the placeholder with the actual repository URL
-          sed -i "s|{{REPOSITORY_URL}}|${REPO_URL}|g" README.md
+          # Get the repository name and owner
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          REPO_OWNER="${GITHUB_REPOSITORY%/*}"
+          # Create the new URL
+          NEW_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}.git"
+          # Replace the hardcoded URL with the dynamic one
+          # This specifically targets the URL structure in the vscode link
+          sed -i "s|url=https://github.com/.*/.*\.git|url=${NEW_URL}|g" README.md
           
       - name: Commit and push changes
         run: |
@@ -36,3 +61,4 @@ jobs:
             git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
             git push
           fi
+Update main.yml · seeli-ai/BackendFastAPI@921d2e1
